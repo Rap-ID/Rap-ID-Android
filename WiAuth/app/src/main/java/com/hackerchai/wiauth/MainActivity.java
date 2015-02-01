@@ -1,17 +1,39 @@
 package com.hackerchai.wiauth;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    SharedPreferences userAuth;
+    String bool;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userAuth =getSharedPreferences("userAuth",MODE_PRIVATE);
+        Log.d(bool,"boolean");
+        if(userAuth.getString("USER_NAME",null)==null)
+        {
+            Intent loginActivity =new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(loginActivity);
+        }
+        else
+        {
+            String name=userAuth.getString("USER_NAME","");
+            Toast.makeText(MainActivity.this,name,Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
