@@ -1,39 +1,47 @@
 package com.hackerchai.wiauth;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
-public class createPairKey extends ActionBarActivity {
+public class createPairKey extends Activity {
+    SharedPreferences createPair;
+    SharedPreferences.Editor editor;
+    TextView tv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_pair_key);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_pair_key, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        createPair = getSharedPreferences("userAuth",MODE_PRIVATE);
+        int pair_key;
+        if(createPair.getInt("PAIR_KEY", 0)==-1)
+        {
+            int random[] = new int[10];
+            for (int i = 0; i <= 3; i++) {
+                random[i] = (int) (Math.random() * 8)+1;
+            }
+            pair_key=random[0]*1000+random[1]*100+random[2]*10+random[3];
+            String pair =Integer.toString(pair_key);
+            Log.d(pair,"pair key");
+            editor=createPair.edit();
+            editor.putInt("PAIR_KEY",pair_key);
+            editor.commit();
+            tv=(TextView)findViewById(R.id.textView);
+            tv.setText(pair);
+        }
+        else
+        {
+            Toast.makeText(this, "已经创建", Toast.LENGTH_LONG).show();
         }
 
-        return super.onOptionsItemSelected(item);
     }
+
+
+
 }

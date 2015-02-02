@@ -24,8 +24,20 @@ public class networkExecute extends ActionBarActivity {
                 Intent sendBroadcst= new Intent(networkExecute.this,udpService.class);
                 startService(sendBroadcst);
 
+
             }
         });
+        Button pair =(Button)findViewById(R.id.pair);
+        pair.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent createPairkey =new Intent(networkExecute.this,createPairKey.class);
+                        startActivity(createPairkey);
+
+                    }
+                }
+        );
 
     }
 

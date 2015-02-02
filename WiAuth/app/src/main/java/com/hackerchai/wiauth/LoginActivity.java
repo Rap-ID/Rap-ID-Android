@@ -1,6 +1,7 @@
 package com.hackerchai.wiauth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -41,7 +42,11 @@ public class LoginActivity extends Activity  {
                                                  editor.putString("USER_NAME", userNameValue);
                                                  editor.putString("PASSWORD",passwordValue);
                                                  editor.putBoolean("isLog", true);
+                                                 editor.putInt("PAIR_KEY",-1);
                                                  editor.commit();
+                                                 Intent goToNetworkExecute =new Intent(LoginActivity.this,networkExecute.class);
+                                                 startActivity(goToNetworkExecute);
+                                                 finish();
                                              }
                                              else
                                              {
