@@ -59,6 +59,13 @@
             android:name=".createPairKey"
             android:label="@string/title_activity_create_pair_key" >
         </activity>
+
+        <service
+            android:name=".tcpService.tcpService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
+
+

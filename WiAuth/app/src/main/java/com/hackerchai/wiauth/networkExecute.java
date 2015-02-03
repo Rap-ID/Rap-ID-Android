@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.hackerchai.wiauth.udpService.udpService;
+import com.hackerchai.wiauth.tcpService.tcpService;
 
 
 public class networkExecute extends ActionBarActivity {
@@ -35,6 +36,16 @@ public class networkExecute extends ActionBarActivity {
                         Intent createPairkey =new Intent(networkExecute.this,createPairKey.class);
                         startActivity(createPairkey);
 
+                    }
+                }
+        );
+        Button startTcp = (Button)findViewById(R.id.startTcp);
+        startTcp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent startTcpService =new Intent(networkExecute.this,tcpService.class);
+                        startService(startTcpService);
                     }
                 }
         );

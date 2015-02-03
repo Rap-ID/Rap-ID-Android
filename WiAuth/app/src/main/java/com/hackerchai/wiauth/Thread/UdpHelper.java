@@ -1,4 +1,4 @@
-package com.hackerchai.wiauth;
+package com.hackerchai.wiauth.Thread;
 
 
 import android.net.wifi.WifiManager;
@@ -30,7 +30,7 @@ public class UdpHelper  implements Runnable {
     public static void send(String message) {
 
         int server_port = 49160;
-        Log.d("UDP Demo", "UDP发送数据:"+message);
+
         DatagramSocket s = null;
         try {
             s = new DatagramSocket();
@@ -62,7 +62,6 @@ public class UdpHelper  implements Runnable {
     public void run() {
         while( true ){
             try {
-                Log.d(broadcastUsername,"broadcast");
                 send(broadcastUsername);
                 Thread.sleep(200);
             } catch (Exception e) {

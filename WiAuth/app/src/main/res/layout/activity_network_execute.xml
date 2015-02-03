@@ -26,4 +26,13 @@
         android:layout_toEndOf="@+id/broadcast"
         android:layout_marginLeft="41dp"
         android:layout_marginStart="41dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Satrt TCP"
+        android:id="@+id/startTcp"
+        android:layout_marginTop="54dp"
+        android:layout_below="@+id/broadcast"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

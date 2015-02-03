@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import com.hackerchai.wiauth.UdpHelper;
+import com.hackerchai.wiauth.Thread.UdpHelper;
 
 
 public class udpService extends Service {
