@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="配对密码"
-        android:id="@+id/textView"
-        android:layout_marginTop="78dp"
+        android:id="@+id/auth"
+        android:layout_marginTop="83dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -21,8 +21,19 @@
         android:layout_height="wrap_content"
         android:text="上面是您的配对密码，请牢记。您会在PC端授权时用到。注意保密！！"
         android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
+        android:layout_marginTop="78dp"
+        android:layout_below="@+id/auth"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="105dp" />
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始授权"
+        android:id="@+id/authButton"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/auth"
+        android:layout_alignStart="@+id/auth"
+        android:layout_marginTop="129dp" />
+
 </RelativeLayout>

@@ -1,9 +1,12 @@
 package com.hackerchai.wiauth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +15,7 @@ public class createPairKey extends Activity {
     SharedPreferences createPair;
     SharedPreferences.Editor editor;
     TextView tv;
+    Button auth;
 
 
     @Override
@@ -32,13 +36,23 @@ public class createPairKey extends Activity {
             editor=createPair.edit();
             editor.putInt("PAIR_KEY",pair_key);
             editor.commit();
-            tv=(TextView)findViewById(R.id.textView);
+            tv=(TextView)findViewById(R.id.auth);
             tv.setText(pair);
         }
         else
         {
             Toast.makeText(this, "已经创建", Toast.LENGTH_LONG).show();
+            finish();
         }
+        auth =(Button)findViewById(R.id.authButton);
+        auth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backAuth =new Intent(createPairKey.this,networkExecute.class);
+                startActivity(backAuth);
+                finish();
+            }
+        });
 
     }
 

@@ -18,6 +18,8 @@ import java.net.Socket;
 
 public class tcpService extends Service {
     SharedPreferences getPairKey;
+    String username;
+    String password;
 
 
     public tcpService() {
@@ -27,7 +29,9 @@ public class tcpService extends Service {
     @Override
     public void onCreate() {
     getPairKey = getSharedPreferences("userAuth", MODE_PRIVATE);
+    username = getPairKey.getString("USER_NAME","");
     int pairKey = getPairKey.getInt("PAIR_KEY", 0);
+    password =getPairKey.getString("PASSWORD","");
     final String sPairKey = Integer.toString(pairKey);
     new Thread(new Runnable()
      {
@@ -35,7 +39,7 @@ public class tcpService extends Service {
             public void run()
             {
                 //Log.d("recvMsg","Open server....");
-                SocketServer ss = new SocketServer(sPairKey);
+                SocketServer ss = new SocketServer(sPairKey,username,password);
             }
      }).start();
     }

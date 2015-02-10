@@ -26,11 +26,13 @@ public class MainActivity extends ActionBarActivity {
         {
             Intent loginActivity =new Intent(MainActivity.this,LoginActivity.class);
             startActivity(loginActivity);
+            finish();
         }
         else
         {
             Intent networkExcute = new Intent(MainActivity.this,networkExecute.class);
             startActivity(networkExcute);
+            finish();
 
         }
 

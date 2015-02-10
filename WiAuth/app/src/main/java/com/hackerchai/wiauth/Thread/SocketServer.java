@@ -22,17 +22,30 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import com.hackerchai.wiauth.Thread.HttpRequest;
+import com.hackerchai.wiauth.TokenParse;
 
 
 public  class  SocketServer {
     private static final int PORT = 49161;
     private ServerSocket server = null;
     private String PAIR_KEY;
+    Boolean isPair = false;
+    private String  Username;
+    private String  Password;
+    private String token_url;
+    private String tokenContent;
+    private String getToken;
 
 
-    public SocketServer(String pair) {
+    public SocketServer(String pair,String username,String password) {
         try {
             this.PAIR_KEY = pair;
+            this.Username =username;
+            this.Password = password;
             server = new ServerSocket(PORT);
             //Log.d("recvMsg", "server start ...\n");
             Socket client = null;
@@ -74,24 +87,52 @@ public  class  SocketServer {
 
                     if ((msg = in.readLine()) != null) {
                         //Log.d("msg", msg);
-                       // Log.d(msg.substring(0, 4),"test");
-                       // Log.d(msg.substring(4, 8),"test");
+                        // Log.d(msg.substring(0, 4),"test");
+                        // Log.d(msg.substring(4, 8),"test");
                         if (msg.substring(0, 4).equals("PAIR")) {
-                           // Log.d("PAIR_KEY",PAIR_KEY);
+                            // Log.d("PAIR_KEY",PAIR_KEY);
                             if (msg.substring(4, 8).equals(PAIR_KEY)) {
                                 sendmsg("PAIROK" + PAIR_KEY);
+                                isPair = true;
+
                             } else {
-                                sendmsg("PAIR_ERROR_WRONG_KEY");
+                                sendmsg("PAIRFAIL" +msg.substring(0,4));
+
+                            }
+                        }
+                        if (msg.substring(0, 4).equals("AUTH") && isPair) {
+                            HttpRequest token = new HttpRequest();
+                            token_url = "http://wiauth.hackerchai.com/api/user/get_token/" + "account=" + Username + "&" + "password=" + Password;
+                            Log.d("url", token_url);
+                            try {
+                                tokenContent = token.get(token_url);
+                                getToken = parseTokenWithJson(tokenContent);
+                                if (!getToken.equals("BAD_TOKEN")) {
+                                    sendmsg("AUTHOK"+getToken);
+                                }
+                                else
+                                {
+                                    sendmsg("AUTHFAIL");
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } finally {
+                                if (token != null) {
+                                    token.shutdownHttpClient();
+                                }
+
+                            }
+                        }
+                            else{
+
 
                             }
                         } else {
-                            sendmsg("PAIR_FIRST");
 
                         }
-                    } else {
-                        //Log.d("null", "null");
                     }
-                } catch (Exception e) {
+                catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -116,6 +157,21 @@ public  class  SocketServer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        private String parseTokenWithJson (String jsonData) {
+            Gson gsonToken = new Gson();
+            TokenParse tokenParse = gsonToken.fromJson(jsonData, TokenParse.class);
+            String err_code = tokenParse.getErr_code();
+            Log.d("err_code", err_code);
+            String token = null;
+            if (err_code.equals("0")) {
+                token = tokenParse.data.getToken();
+                Log.d("token",token);
+            } else {
+                token="B";
+            }
+            return token;
+
         }
     }
 }

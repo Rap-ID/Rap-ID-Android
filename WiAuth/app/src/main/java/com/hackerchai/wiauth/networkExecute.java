@@ -1,55 +1,63 @@
 package com.hackerchai.wiauth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hackerchai.wiauth.udpService.udpService;
 import com.hackerchai.wiauth.tcpService.tcpService;
 
 
 public class networkExecute extends ActionBarActivity {
+    SharedPreferences checkPairkey;
+    TextView label;
+    Button stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_execute);
-        Button mSendBroadcast =(Button)findViewById(R.id.broadcast);
-        mSendBroadcast.setOnClickListener(new View.OnClickListener() {
+        label =(TextView)findViewById(R.id.textView);
+        label.setText("授权服务启动中....");
+        checkPairkey =getSharedPreferences("userAuth",MODE_PRIVATE);
+        if(checkPairkey.getInt("PAIR_KEY", 0)==-1)
+        {
+            Intent getPairKey =new Intent(networkExecute.this,createPairKey.class);
+            startActivity(getPairKey);
+        }
+        else
+        {
+
+            Intent sendBroadcst= new Intent(networkExecute.this,udpService.class);
+            startService(sendBroadcst);
+            Intent startTcpService =new Intent(networkExecute.this,tcpService.class);
+            startService(startTcpService);
+            Toast.makeText(networkExecute.this,"WiAuth授权服务开始",Toast.LENGTH_LONG).show();
+            label.setText("WiAuth授权服务已开始");
+
+        }
+        stop=(Button)findViewById(R.id.stop);
+        stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sendBroadcst= new Intent(networkExecute.this,udpService.class);
-                startService(sendBroadcst);
-
+                Intent stopSendBroadcst= new Intent(networkExecute.this,udpService.class);
+                stopService(stopSendBroadcst);
+                Intent stopStartTcpService =new Intent(networkExecute.this,tcpService.class);
+                stopService(stopStartTcpService);
+                label.setText("WiAuth授权服务已停止");
+                Toast.makeText(networkExecute.this,"WiAuth授权服务已停止",Toast.LENGTH_SHORT).show();
+                finish();
 
             }
         });
-        Button pair =(Button)findViewById(R.id.pair);
-        pair.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent createPairkey =new Intent(networkExecute.this,createPairKey.class);
-                        startActivity(createPairkey);
-
-                    }
-                }
-        );
-        Button startTcp = (Button)findViewById(R.id.startTcp);
-        startTcp.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent startTcpService =new Intent(networkExecute.this,tcpService.class);
-                        startService(startTcpService);
-                    }
-                }
-        );
-
     }
 
 
