@@ -31,6 +31,10 @@ public class udpService extends Service {
         tReceived.start();
         super.onCreate();
     }
+    @Override
+    public void onDestroy(){
+
+    }
 
     @Override
     public IBinder onBind(Intent intent) {

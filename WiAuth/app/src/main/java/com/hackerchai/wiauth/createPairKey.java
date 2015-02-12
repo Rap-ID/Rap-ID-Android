@@ -22,6 +22,7 @@ public class createPairKey extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_pair_key);
+        setTitle("创建配对密钥");
         createPair = getSharedPreferences("userAuth",MODE_PRIVATE);
         int pair_key;
         if(createPair.getInt("PAIR_KEY", 0)==-1)

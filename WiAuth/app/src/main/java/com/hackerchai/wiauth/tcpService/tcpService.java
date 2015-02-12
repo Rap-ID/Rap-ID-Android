@@ -3,8 +3,11 @@ package com.hackerchai.wiauth.tcpService;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hackerchai.wiauth.Thread.SocketServer;
 
@@ -20,7 +23,6 @@ public class tcpService extends Service {
     SharedPreferences getPairKey;
     String username;
     String password;
-
 
     public tcpService() {
     }
@@ -39,9 +41,10 @@ public class tcpService extends Service {
             public void run()
             {
                 //Log.d("recvMsg","Open server....");
-                SocketServer ss = new SocketServer(sPairKey,username,password);
+                SocketServer ss = new SocketServer(sPairKey,username,password,49161);
             }
      }).start();
+
     }
 
     @Override
@@ -55,6 +58,7 @@ public class tcpService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
+
 
 
 

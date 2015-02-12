@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hackerchai.wiauth.tcpService.authService;
 import com.hackerchai.wiauth.udpService.udpService;
 import com.hackerchai.wiauth.tcpService.tcpService;
 
@@ -20,11 +21,14 @@ public class networkExecute extends ActionBarActivity {
     SharedPreferences checkPairkey;
     TextView label;
     Button stop;
+    SharedPreferences delPair;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_execute);
+        setTitle("服务运行中");
         label =(TextView)findViewById(R.id.textView);
         label.setText("授权服务启动中....");
         checkPairkey =getSharedPreferences("userAuth",MODE_PRIVATE);
@@ -37,9 +41,12 @@ public class networkExecute extends ActionBarActivity {
         {
 
             Intent sendBroadcst= new Intent(networkExecute.this,udpService.class);
-            startService(sendBroadcst);
             Intent startTcpService =new Intent(networkExecute.this,tcpService.class);
+            Intent startAuthService = new Intent(networkExecute.this,authService.class);
+
+            startService(sendBroadcst);
             startService(startTcpService);
+            startService(startAuthService);
             Toast.makeText(networkExecute.this,"WiAuth授权服务开始",Toast.LENGTH_LONG).show();
             label.setText("WiAuth授权服务已开始");
 
@@ -48,12 +55,15 @@ public class networkExecute extends ActionBarActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent stopSendBroadcst= new Intent(networkExecute.this,udpService.class);
-                stopService(stopSendBroadcst);
-                Intent stopStartTcpService =new Intent(networkExecute.this,tcpService.class);
-                stopService(stopStartTcpService);
-                label.setText("WiAuth授权服务已停止");
-                Toast.makeText(networkExecute.this,"WiAuth授权服务已停止",Toast.LENGTH_SHORT).show();
+                Intent killSendBroadcst= new Intent(networkExecute.this,udpService.class);
+                Intent killStartTcpService =new Intent(networkExecute.this,tcpService.class);
+                Intent killStartAuthService = new Intent(networkExecute.this,authService.class);
+
+                stopService(killSendBroadcst);
+                stopService(killStartAuthService);
+                stopService(killStartTcpService);
+                Toast.makeText(networkExecute.this,"WiAuth授权服务已关闭",Toast.LENGTH_LONG).show();
+                label.setText("WiAuth授权服务已关闭");
                 finish();
 
             }
@@ -77,7 +87,9 @@ public class networkExecute extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent getPairKey = new Intent (networkExecute.this,LoginActivity.class);
+            startActivity(getPairKey);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

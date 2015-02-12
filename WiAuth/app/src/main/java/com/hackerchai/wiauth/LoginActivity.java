@@ -70,6 +70,7 @@ public class LoginActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("登录");
         sp = this.getSharedPreferences("userAuth", MODE_PRIVATE);
         Button logButton =(Button)findViewById(R.id.log_in_button);
         final EditText username =(EditText)findViewById(R.id.username);
