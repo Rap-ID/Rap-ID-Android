@@ -38,7 +38,7 @@ public class LoginActivity extends Activity  {
     String userNameValue;
     String passwordValue;
     SharedPreferences sp;
-    String IMEI;
+    String ICCID;
     private String token_url;
     private String tokenContent;
     private String getToken;
@@ -76,7 +76,8 @@ public class LoginActivity extends Activity  {
         final EditText username =(EditText)findViewById(R.id.username);
         final EditText password =(EditText)findViewById(R.id.password);
         TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
-        IMEI =  tm.getDeviceId();
+        ICCID = tm.getSimSerialNumber();
+
         logButton.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
@@ -88,24 +89,23 @@ public class LoginActivity extends Activity  {
                                                  public void run() {
                                                      HttpRequest token = new HttpRequest();
                                                      token_url = "http://wiauth.hackerchai.com/api/user/get_token/" + "account=" + userNameValue + "&" + "password=" + passwordValue;
-                                                     Log.d("url", token_url);
+
                                                      try {
                                                          tokenContent = token.get(token_url);
                                                          getToken = parseTokenWithJson(tokenContent);
                                                          if (!getToken.equals("BAD_TOKEN")) {
                                                              list_url = "http://wiauth.hackerchai.com/api/user/list/" + "token=" + getToken + "&" + "account=" + userNameValue;
-                                                             Log.d("list_url", list_url);
-                                                             HashMap<String, String> headers = new HashMap<String, String>();
-                                                             headers.put("Cookie", "PHPSESSID=" + getToken);
-                                                             token.setHeaders(headers);
+
+
+
                                                              idContent = token.get(list_url);
-                                                             Log.d("idContent", idContent);
+
                                                              getId = parseIdWithJson(idContent);
 
-                                                             update_url = "http://wiauth.hackerchai.com/api/user/update/" + "token=" + getToken + "&" + "id=" + getId + "&" + "password=" + passwordValue + "&" + "usmid=" + IMEI;
-                                                             Log.d("update_url", update_url);
+                                                             update_url = "http://wiauth.hackerchai.com/api/user/update/" + "token=" + getToken + "&" + "id=" + getId + "&" + "password=" + passwordValue + "&" + "iccid=" + ICCID;
+
                                                              updateContent = token.get(update_url);
-                                                             Log.d("updateContent", updateContent);
+
                                                              SharedPreferences.Editor editor = sp.edit();
                                                              editor.putString("USER_NAME", userNameValue);
                                                              editor.putString("PASSWORD", passwordValue);
