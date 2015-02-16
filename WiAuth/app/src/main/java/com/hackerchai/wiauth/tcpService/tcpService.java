@@ -1,14 +1,18 @@
 package com.hackerchai.wiauth.tcpService;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hackerchai.wiauth.R;
 import com.hackerchai.wiauth.Thread.SocketServer;
 
 import java.io.BufferedReader;
@@ -23,6 +27,11 @@ public class tcpService extends Service {
     SharedPreferences getPairKey;
     String username;
     String password;
+
+
+    private NotificationManager cNotificationManager;
+    //常驻通知
+    private Notification cNotification;
 
     public tcpService() {
     }
@@ -49,6 +58,21 @@ public class tcpService extends Service {
 
     @Override
     public void onDestroy() {
+
+    }
+    public void updateNotification(String text) {
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setContentTitle("通知")
+                .setContentText(text)
+                .setTicker("WiAuth通知:" + text)
+                .setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setOngoing(false)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setSmallIcon(R.drawable.ic_launcher);
+        mNotificationManager.notify(1, mBuilder.build());
 
     }
 
