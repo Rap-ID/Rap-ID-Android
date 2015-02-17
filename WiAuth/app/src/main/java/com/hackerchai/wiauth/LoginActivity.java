@@ -150,11 +150,9 @@ public class LoginActivity extends Activity  {
         Gson gsonToken = new Gson();
         TokenParse tokenParse = gsonToken.fromJson(jsonData, TokenParse.class);
         String err_code = tokenParse.getErr_code();
-        Log.d("err_code", err_code);
         String token = null;
         if (err_code.equals("0")) {
             token = tokenParse.data.getToken();
-            Log.d("token",token);
         } else {
             token="BAD_TOKEN";
         }

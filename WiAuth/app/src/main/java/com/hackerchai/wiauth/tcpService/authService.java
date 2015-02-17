@@ -5,7 +5,9 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
 import com.hackerchai.wiauth.R;
@@ -15,6 +17,7 @@ public class authService extends Service {
     SharedPreferences getPairKey;
     String username;
     String password;
+    public static final int SHOW_RESPONSE = 0;
     public authService() {
     }
     @Override
@@ -24,13 +27,30 @@ public class authService extends Service {
         int pairKey = getPairKey.getInt("PAIR_KEY", 0);
         password =getPairKey.getString("PASSWORD","");
         final String sPairKey = Integer.toString(pairKey);
+        final Handler handler =new Handler() {
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case SHOW_RESPONSE:
+                        String response = (String) msg.obj;
+                        if(response.equals("AUTH"))
+                        {
+                            updateNotification("验证成功");
+                            stopSelf();
+                        }
+                        else
+                        {
+
+                        }
+                }
+            }
+        };
         new Thread(new Runnable()
         {
             @Override
             public void run()
             {
                 //Log.d("recvMsg","Open server....");
-                SocketServer ss = new SocketServer(sPairKey,username,password,49162);
+                SocketServer ss = new SocketServer(sPairKey,username,password,49162,handler);
             }
         }).start();
 
@@ -47,7 +67,9 @@ public class authService extends Service {
                 .setAutoCancel(true)
                 .setOngoing(false)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setDefaults (Notification.DEFAULT_SOUND)
                 .setSmallIcon(R.drawable.ic_launcher);
+
         mNotificationManager.notify(1, mBuilder.build());
 
     }

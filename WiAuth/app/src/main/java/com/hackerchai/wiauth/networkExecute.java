@@ -62,9 +62,9 @@ public class networkExecute extends ActionBarActivity {
                 stopService(killSendBroadcst);
                 stopService(killStartAuthService);
                 stopService(killStartTcpService);
-                Toast.makeText(networkExecute.this,"WiAuth授权服务已关闭",Toast.LENGTH_LONG).show();
                 label.setText("WiAuth授权服务已关闭");
                 finish();
+                System.exit(0);
 
             }
         });

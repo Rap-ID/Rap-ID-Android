@@ -26,6 +26,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
@@ -40,10 +41,10 @@ import com.hackerchai.wiauth.tcpService.authService;
 import com.hackerchai.wiauth.tcpService.tcpService;
 
 public  class  SocketServer {
+    Handler handler;
     private int PORT;
     private ServerSocket server = null;
     private String PAIR_KEY;
-    Boolean isPair = false;
     private String  Username;
     private String  Password;
     private String token_url;
@@ -52,16 +53,15 @@ public  class  SocketServer {
     private String decryptMsg;
     private String encryptMsg;
     private String key="MKY%x!T%";
-    private Notification NF;
-    private tcpService tcpser;
-    private authService authser;
+    public static final int SHOW_RESPONSE = 0;
 
 
 
 
 
-    public SocketServer(String pair,String username,String password,int PORT) {
+    public SocketServer(String pair,String username,String password,int PORT,Handler handler) {
         try {
+            this.handler=handler;
             this.PORT=PORT;
             this.PAIR_KEY = pair;
             this.Username =username;
@@ -70,7 +70,6 @@ public  class  SocketServer {
 
             Socket client = null;
             while (true) {
-                Log.d("client","socket server");
                 client = server.accept();
                 TcpThread tcpThread = new TcpThread(client);
                 new Thread(tcpThread).run();
@@ -101,22 +100,20 @@ public  class  SocketServer {
         public void run() {
             //Log.d("run", "receive");
             // TODO Auto-generated method stub
-            Log.d("run","run");
-
             while (!Thread.currentThread().isInterrupted()) {
 
                     try {
-                        String temp = Crypto.encrypt("PAIR2843", key);
-                        Log.d("key",temp);
                         if ((msg = in.readLine()) != null) {
                             decryptMsg = Crypto.decrypt(msg,key);
-                            Log.d("decrypt",decryptMsg);
+
                             if (decryptMsg.substring(0, 4).equals("PAIR")) {
                                 if (decryptMsg.substring(4, 8).equals(PAIR_KEY)) {
                                     sendmsg("PAIROK" + PAIR_KEY);
-                                    //tcpser.updateNotification("配对成功！");
-
-
+                                    Message message = Message.obtain();
+                                    String mes ="PAIR";
+                                    message.obj=mes;
+                                    message.what =SHOW_RESPONSE;
+                                    handler.sendMessage(message);
 
                                 } else {
                                     sendmsg("PAIRFAIL" + msg.substring(4, 8));
@@ -128,13 +125,16 @@ public  class  SocketServer {
                                 if (decryptMsg.substring(4, 8).equals(PAIR_KEY)) {
                                     HttpRequest token = new HttpRequest();
                                     token_url = "http://wiauth.hackerchai.com/api/user/get_token/" + "account=" + Username + "&" + "password=" + Password;
-                                    Log.d("url", token_url);
                                     try {
                                         tokenContent = token.get(token_url);
                                         getToken = parseTokenWithJson(tokenContent);
                                         if (!getToken.equals("BAD_TOKEN")) {
                                             sendmsg("AUTHOK" + getToken);
-                                            //authser.updateNotification("授权成功！");
+                                            Message message = Message.obtain();
+                                            String mes ="AUTH";
+                                            message.obj=mes;
+                                            message.what =SHOW_RESPONSE;
+                                            handler.sendMessage(message);
                                         } else {
                                             sendmsg("AUTHFAIL");
 
@@ -168,13 +168,11 @@ public  class  SocketServer {
         public void sendmsg(String sMesg) {
 
             String sendMsg = sMesg;
-            Log.d("send",sendMsg);
             try {
                 encryptMsg = Crypto.encrypt(sendMsg, key);
-                Log.d("Encrypt",encryptMsg);
+
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d("Encrypt Wrong","Wrong");
             }
             try {
 
@@ -194,11 +192,11 @@ public  class  SocketServer {
             Gson gsonToken = new Gson();
             TokenParse tokenParse = gsonToken.fromJson(jsonData, TokenParse.class);
             String err_code = tokenParse.getErr_code();
-            Log.d("err_code", err_code);
+
             String token = null;
             if (err_code.equals("0")) {
                 token = tokenParse.data.getToken();
-                Log.d("token",token);
+
             } else {
                 token="BAD_TOKEN";
             }

@@ -27,6 +27,7 @@ public class tcpService extends Service {
     SharedPreferences getPairKey;
     String username;
     String password;
+    public static final int SHOW_RESPONSE = 0;
 
 
     private NotificationManager cNotificationManager;
@@ -44,15 +45,32 @@ public class tcpService extends Service {
     int pairKey = getPairKey.getInt("PAIR_KEY", 0);
     password =getPairKey.getString("PASSWORD","");
     final String sPairKey = Integer.toString(pairKey);
-    new Thread(new Runnable()
-     {
+
+    final  Handler handler =new Handler() {
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case SHOW_RESPONSE:
+                        String response = (String) msg.obj;
+                        if(response.equals("PAIR")) {
+                            updateNotification("配对成功");
+                            stopSelf();
+                        }
+                        else
+                        {
+                            
+                        }
+                }
+            }
+        };
+        new Thread(new Runnable()
+        {
             @Override
             public void run()
             {
                 //Log.d("recvMsg","Open server....");
-                SocketServer ss = new SocketServer(sPairKey,username,password,49161);
+                SocketServer ss = new SocketServer(sPairKey,username,password,49161,handler);
             }
-     }).start();
+        }).start();
 
     }
 
@@ -71,7 +89,9 @@ public class tcpService extends Service {
                 .setAutoCancel(true)
                 .setOngoing(false)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setDefaults (Notification.DEFAULT_SOUND)
                 .setSmallIcon(R.drawable.ic_launcher);
+
         mNotificationManager.notify(1, mBuilder.build());
 
     }
