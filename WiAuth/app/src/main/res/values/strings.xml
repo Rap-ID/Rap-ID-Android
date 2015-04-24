@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WiAuth</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_network_execute">networkExecute</string>
+    <string name="title_activity_create_pair_key">createPairKey</string>
+    <string name="title_get_pair_key">重新登录</string>
+</resources>
