@@ -62,8 +62,8 @@ public class networkExecute extends ActionBarActivity {
             startService(sendBroadcst);
             startService(startTcpService);
             startService(startAuthService);
-            Toast.makeText(networkExecute.this,"WiAuth授权服务开始",Toast.LENGTH_LONG).show();
-            label.setText("WiAuth授权服务已开始");
+            Toast.makeText(networkExecute.this,"Rap-ID授权服务已开始",Toast.LENGTH_LONG).show();
+            label.setText("Rap-ID授权服务已开始");
 
         }
         stop=(Button)findViewById(R.id.stop);
@@ -77,7 +77,7 @@ public class networkExecute extends ActionBarActivity {
                 stopService(killSendBroadcst);
                 stopService(killStartAuthService);
                 stopService(killStartTcpService);
-                label.setText("WiAuth授权服务已关闭");
+                label.setText("Rap-ID授权服务已关闭");
                 finish();
                 System.exit(0);
 
