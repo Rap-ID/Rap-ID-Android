@@ -92,6 +92,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="fluent-hc-4.4" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="systembartint-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="jna-4.1.0" level="project" />
     <orderEntry type="library" exported="" name="httpclient-cache-4.4" level="project" />
     <orderEntry type="library" exported="" name="jna-platform-4.1.0" level="project" />

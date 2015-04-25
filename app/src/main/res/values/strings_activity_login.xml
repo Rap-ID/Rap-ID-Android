@@ -4,7 +4,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">用户名</string>
     <string name="prompt_password">密码</string>
-    <string name="action_sign_in">登陆 WiAuth</string>
+    <string name="action_sign_in">登陆 Rap-ID</string>
     <string name="error_invalid_username">用户名不正确</string>
     <string name="error_invalid_password">密码过于短</string>
     <string name="error_incorrect_password">密码不正确</string>

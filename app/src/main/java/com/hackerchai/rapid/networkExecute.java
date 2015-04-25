@@ -2,11 +2,14 @@ package com.hackerchai.rapid;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 import com.hackerchai.rapid.tcpService.authService;
 import com.hackerchai.rapid.udpService.udpService;
 import com.hackerchai.rapid.tcpService.tcpService;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
 public class networkExecute extends ActionBarActivity {
@@ -26,8 +30,21 @@ public class networkExecute extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_network_execute);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(Color.parseColor("#3367d6"));
         setTitle("服务运行中");
+
         label =(TextView)findViewById(R.id.textView);
         label.setText("授权服务启动中....");
         checkPairkey =getSharedPreferences("userAuth",MODE_PRIVATE);
