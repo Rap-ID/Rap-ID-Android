@@ -40,8 +40,7 @@ public class createPairKey extends ActionBarActivity {
         // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
         // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#3367d6"));
+        tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         setTitle("创建配对密钥");
         createPair = getSharedPreferences("userAuth",MODE_PRIVATE);
         int pair_key;

@@ -41,8 +41,7 @@ public class networkExecute extends ActionBarActivity {
         // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
         // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#3367d6"));
+        tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         setTitle("服务运行中");
 
         label =(TextView)findViewById(R.id.textView);

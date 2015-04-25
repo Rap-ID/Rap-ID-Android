@@ -80,8 +80,7 @@ public class LoginActivity extends ActionBarActivity {
         // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
         // enable navigation bar tint
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#3367d6"));
+        tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         setTitle("登录");
         sp = this.getSharedPreferences("userAuth", MODE_PRIVATE);
         Button logButton =(Button)findViewById(R.id.log_in_button);
