@@ -41,6 +41,11 @@ public class networkExecute extends ActionBarActivity {
             // enable navigation bar tint
             tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         }
+        else
+        {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         setContentView(R.layout.activity_network_execute);
 
         setTitle("服务运行中");

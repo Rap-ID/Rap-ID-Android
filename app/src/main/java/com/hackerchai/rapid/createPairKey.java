@@ -44,6 +44,11 @@ public class createPairKey extends ActionBarActivity {
             // enable navigation bar tint
             tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         }
+        else
+        {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         setContentView(R.layout.activity_create_pair_key);
 
         setTitle("创建配对密钥");
