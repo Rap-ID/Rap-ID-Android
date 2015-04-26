@@ -35,13 +35,14 @@ public class networkExecute extends ActionBarActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            // enable status bar tint
+            tintManager.setStatusBarTintEnabled(true);
+            // enable navigation bar tint
+            tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         }
         setContentView(R.layout.activity_network_execute);
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
+
         setTitle("服务运行中");
 
         label =(TextView)findViewById(R.id.textView);

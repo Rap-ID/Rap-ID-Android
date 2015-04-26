@@ -74,13 +74,14 @@ public class LoginActivity extends ActionBarActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            // enable status bar tint
+            tintManager.setStatusBarTintEnabled(true);
+            // enable navigation bar tint
+            tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
         }
         setContentView(R.layout.activity_login);
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        // enable status bar tint
-        tintManager.setStatusBarTintEnabled(true);
-        // enable navigation bar tint
-        tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
+
         setTitle("登录");
         sp = this.getSharedPreferences("userAuth", MODE_PRIVATE);
         Button logButton =(Button)findViewById(R.id.log_in_button);
