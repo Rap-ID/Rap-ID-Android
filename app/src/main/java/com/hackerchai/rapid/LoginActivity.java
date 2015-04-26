@@ -84,7 +84,7 @@ public class LoginActivity extends ActionBarActivity {
 
         setTitle("登录");
         sp = this.getSharedPreferences("userAuth", MODE_PRIVATE);
-        Button logButton =(Button)findViewById(R.id.log_in_button);
+        com.gc.materialdesign.views.ButtonRectangle logButton =(com.gc.materialdesign.views.ButtonRectangle)findViewById(R.id.log_in_button);
         final EditText username =(EditText)findViewById(R.id.username);
         final EditText password =(EditText)findViewById(R.id.password);
         TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);

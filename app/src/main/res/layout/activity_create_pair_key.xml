@@ -28,11 +28,12 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="105dp" />
 
-    <Button
+    <com.gc.materialdesign.views.ButtonRectangle
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开始授权"
         android:id="@+id/authButton"
+        android:background="#4285f4"
         android:layout_marginTop="100dp"
         android:layout_below="@+id/textView2"
 

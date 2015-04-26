@@ -33,10 +33,10 @@
             android:imeOptions="actionUnspecified" android:inputType="textPassword"
             android:maxLines="1" android:singleLine="true" />
 
-        <Button android:id="@+id/log_in_button" style="?android:textAppearanceSmall"
+        <com.gc.materialdesign.views.ButtonRectangle android:id="@+id/log_in_button" style="?android:textAppearanceSmall"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-            android:background="#1E88E5"
+            android:background="#4285f4"
             android:textStyle="bold" />
 
     </LinearLayout>

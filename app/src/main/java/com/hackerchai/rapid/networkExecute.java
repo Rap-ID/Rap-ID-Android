@@ -23,7 +23,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 public class networkExecute extends ActionBarActivity {
     SharedPreferences checkPairkey;
     TextView label;
-    Button stop;
+    com.gc.materialdesign.views.ButtonRectangle stop;
     SharedPreferences delPair;
 
 
@@ -67,7 +67,7 @@ public class networkExecute extends ActionBarActivity {
             label.setText("Rap-ID授权服务已开始");
 
         }
-        stop=(Button)findViewById(R.id.stop);
+        stop=(com.gc.materialdesign.views.ButtonRectangle)findViewById(R.id.stop);
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

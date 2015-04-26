@@ -53,19 +53,13 @@
                 android:value="com.hackerchai.rapid.MainActivity" />
         </activity>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name="com.hackerchai.rapid.networkExecute"
-            android:label="@string/title_activity_network_execute" >
+            android:label="@string/title_activity_network_execute">
         </activity>
 
         <service
-            android:name="com.hackerchai.rapid.udpService.udpService"
-            android:enabled="true"
-            android:exported="true" >
+            android:name="com.hackerchai.rapid.udpService.udpService">
         </service>
 
         <activity
@@ -75,11 +69,10 @@
 
         <service
             android:name="com.hackerchai.rapid.tcpService.tcpService"
-            android:exported="false" >
+ >
         </service>
         <service
-            android:name="com.hackerchai.rapid.tcpService.authService"
-            android:exported="false" >
+            android:name="com.hackerchai.rapid.tcpService.authService">
         </service>
     </application>
 

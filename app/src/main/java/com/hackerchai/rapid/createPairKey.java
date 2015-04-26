@@ -24,7 +24,8 @@ public class createPairKey extends ActionBarActivity {
     SharedPreferences createPair;
     SharedPreferences.Editor editor;
     TextView tv;
-    Button auth;
+
+
 
 
     @Override
@@ -68,7 +69,7 @@ public class createPairKey extends ActionBarActivity {
             Toast.makeText(this, "已经创建", Toast.LENGTH_LONG).show();
             finish();
         }
-        auth =(Button)findViewById(R.id.authButton);
+        com.gc.materialdesign.views.ButtonRectangle auth =(com.gc.materialdesign.views.ButtonRectangle)findViewById(R.id.authButton);
         auth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

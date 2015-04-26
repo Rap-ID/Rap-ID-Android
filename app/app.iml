@@ -86,7 +86,6 @@
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.4" level="project" />
-    <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.4" level="project" />
     <orderEntry type="library" exported="" name="commons-logging-1.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
@@ -98,6 +97,7 @@
     <orderEntry type="library" exported="" name="jna-platform-4.1.0" level="project" />
     <orderEntry type="library" exported="" name="httpclient-win-4.4" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.4" level="project" />
+    <orderEntry type="library" exported="" name="MaterialDesign-1.4" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.9" level="project" />
   </component>
 </module>
