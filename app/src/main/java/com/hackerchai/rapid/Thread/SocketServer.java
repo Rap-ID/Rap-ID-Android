@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.os.Handler;
 import android.os.Message;
@@ -28,6 +30,7 @@ public  class  SocketServer {
     private String PAIR_KEY;
     private String  Username;
     private String  Password;
+    private String Iccid;
     private String token_url;
     private String tokenContent;
     private String getToken;
@@ -40,13 +43,14 @@ public  class  SocketServer {
 
 
 
-    public SocketServer(String pair,String username,String password,int PORT,Handler handler) {
+    public SocketServer(String pair,String username,String password,String iccid,int PORT,Handler handler) {
         try {
             this.handler=handler;
             this.PORT=PORT;
             this.PAIR_KEY = pair;
             this.Username =username;
             this.Password = password;
+            this.Iccid= iccid;
             server = new ServerSocket(PORT);
 
             Socket client = null;
@@ -104,10 +108,15 @@ public  class  SocketServer {
                             }
                             if (decryptMsg.substring(0, 4).equals("AUTH")) {
                                 if (decryptMsg.substring(4, 8).equals(PAIR_KEY)) {
-                                    HttpRequest token = new HttpRequest();
-                                    token_url = "http://wiauth.hackerchai.com/api/user/get_token/" + "account=" + Username + "&" + "password=" + Password;
+                                    HttpUtil token = new HttpUtil();
+                                    token_url ="http://rapid.cotr.me/api/login";
+                                    //token.setUrl(token_url);
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("username", Username);
+                                    params.put("password", Password);
+                                    params.put("iccid",Iccid);
                                     try {
-                                        tokenContent = token.get(token_url);
+                                        tokenContent = token.post(token_url,null,params);
                                         getToken = parseTokenWithJson(tokenContent);
                                         if (!getToken.equals("BAD_TOKEN")) {
                                             sendmsg("AUTHOK" + getToken);
@@ -125,7 +134,7 @@ public  class  SocketServer {
                                         e.printStackTrace();
                                     } finally {
                                         if (token != null) {
-                                            token.shutdownHttpClient();
+
                                         }
                                     }
                                 } else {
@@ -172,19 +181,16 @@ public  class  SocketServer {
         private String parseTokenWithJson (String jsonData) {
             Gson gsonToken = new Gson();
             TokenParse tokenParse = gsonToken.fromJson(jsonData, TokenParse.class);
-            String err_code = tokenParse.getErr_code();
-
+            String err_code = tokenParse.getError().getId();
             String token = null;
             if (err_code.equals("0")) {
-                token = tokenParse.data.getToken();
-
+                token =tokenParse.getData();
             } else {
                 token="BAD_TOKEN";
             }
             return token;
 
         }
-
 
 
     }

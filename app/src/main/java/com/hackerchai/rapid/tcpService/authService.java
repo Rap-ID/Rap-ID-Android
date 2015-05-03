@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
+import android.telephony.TelephonyManager;
 
 import com.hackerchai.rapid.R;
 import com.hackerchai.rapid.Thread.SocketServer;
@@ -24,6 +25,8 @@ public class authService extends Service {
     public void onCreate() {
         getPairKey = getSharedPreferences("userAuth", MODE_PRIVATE);
         username = getPairKey.getString("USER_NAME","");
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+        final String ICCID = tm.getSimSerialNumber();
         int pairKey = getPairKey.getInt("PAIR_KEY", 0);
         password =getPairKey.getString("PASSWORD","");
         final String sPairKey = Integer.toString(pairKey);
@@ -50,7 +53,7 @@ public class authService extends Service {
             public void run()
             {
                 //Log.d("recvMsg","Open server....");
-                SocketServer ss = new SocketServer(sPairKey,username,password,49162,handler);
+                SocketServer ss = new SocketServer(sPairKey,username,password,ICCID,49162,handler);
             }
         }).start();
 

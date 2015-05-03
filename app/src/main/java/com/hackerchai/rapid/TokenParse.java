@@ -4,61 +4,51 @@ package com.hackerchai.rapid;
  * Created by hackerchai on 15-2-9.
  */
 public class TokenParse {
-    private String err_code;
 
-    private String err_msg;
+    public String data;
+    public Error error;
 
-    public Data data;
-
-    public String getErr_code()
-    {
-        return err_code;
+    public void setError(Error error) {
+        this.error = error;
     }
-    public void setErr_code(String err_code)
+    public Error getError()
     {
-        this.err_code=err_code;
-
+        return error;
     }
 
-    public String getErr_msg()
-    {
-        return err_msg;
-    }
-    public void setErr_msg(String err_msg)
-    {
-        this.err_msg=err_msg;
-    }
-    public void setData(Data data)
+    public void setData(String data)
     {
        this.data=data;
     }
-    public Data getData()
+    public String getData()
     {
         return data;
     }
 
-    public static class Data {
 
-        private String token;
 
-        private String uid;
+    public static class Error {
 
-        public String getUid()
+        private String id;
+
+        private String msg;
+
+        public String getId()
         {
-            return uid;
+            return id;
         }
-        public void setUid(String uid)
+        public void setId(String id)
         {
-            this.uid=uid;
+            this.id=id;
         }
 
-        public String getToken()
+        public String getMsg()
         {
-            return token;
+            return msg;
         }
-        public void setToken(String token)
+        public void setMsg(String msg)
         {
-            this.token=token;
+            this.msg=msg;
         }
     }
 

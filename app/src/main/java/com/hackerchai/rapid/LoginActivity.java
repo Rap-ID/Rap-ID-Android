@@ -18,11 +18,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hackerchai.rapid.Thread.HttpRequest;
+import com.hackerchai.rapid.Thread.HttpUtil;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -104,25 +106,19 @@ public class LoginActivity extends ActionBarActivity {
                                              new Thread(new Runnable() {
                                                  @Override
                                                  public void run() {
-                                                     HttpRequest token = new HttpRequest();
-                                                     token_url = "http://wiauth.hackerchai.com/api/user/get_token/" + "account=" + userNameValue + "&" + "password=" + passwordValue;
+                                                     HttpUtil token = new HttpUtil();
+                                                     token_url ="http://rapid.cotr.me/api/login";
+                                                     //token.setUrl(token_url);
+                                                     Map<String, String> params = new HashMap<String, String>();
+                                                     params.put("username", userNameValue);
+                                                     params.put("password", passwordValue);
+                                                     params.put("iccid",ICCID);
 
                                                      try {
-                                                         tokenContent = token.get(token_url);
+                                                         tokenContent = token.post(token_url,null,params);
                                                          getToken = parseTokenWithJson(tokenContent);
-                                                         if (!getToken.equals("BAD_TOKEN")) {
-                                                             list_url = "http://wiauth.hackerchai.com/api/user/list/" + "token=" + getToken + "&" + "account=" + userNameValue;
-
-
-
-                                                             idContent = token.get(list_url);
-
-                                                             getId = parseIdWithJson(idContent);
-
-                                                             update_url = "http://wiauth.hackerchai.com/api/user/update/" + "token=" + getToken + "&" + "id=" + getId + "&" + "password=" + passwordValue + "&" + "iccid=" + ICCID;
-
-                                                             updateContent = token.get(update_url);
-
+                                                         Log.d("token",getToken);
+                                                         if (getToken.equals("OK")) {
                                                              SharedPreferences.Editor editor = sp.edit();
                                                              editor.putString("USER_NAME", userNameValue);
                                                              editor.putString("PASSWORD", passwordValue);
@@ -143,7 +139,7 @@ public class LoginActivity extends ActionBarActivity {
                                                          e.printStackTrace();
                                                      } finally {
                                                          if (token != null) {
-                                                             token.shutdownHttpClient();
+
                                                          }
 
                                                      }
@@ -166,34 +162,14 @@ public class LoginActivity extends ActionBarActivity {
     private String parseTokenWithJson (String jsonData) {
         Gson gsonToken = new Gson();
         TokenParse tokenParse = gsonToken.fromJson(jsonData, TokenParse.class);
-        String err_code = tokenParse.getErr_code();
+        String err_code = tokenParse.getError().getId();
         String token = null;
         if (err_code.equals("0")) {
-            token = tokenParse.data.getToken();
+            token = "OK";
         } else {
-            token="BAD_TOKEN";
+            token=tokenParse.getError().getId();
         }
         return token;
-
-    }
-    private String parseIdWithJson (String jsonData) {
-        Gson gsonId = new Gson();
-        ListParse listParse = gsonId.fromJson(jsonData, ListParse.class);
-        String err_code = listParse.getErr_code();
-        Log.d("err_code", err_code);
-        List<ListParse.Data.Items> idList = null;
-        String id =null;
-        if (err_code.equals("0")) {
-            idList=listParse.getData().getItems();
-            for(ListParse.Data.Items items:idList)
-            {
-                id=items.getId();
-            }
-            Log.d("id",id);
-        } else {
-            id="BAD_TOKEN";
-        }
-        return id;
 
     }
 

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 21
     buildToolsVersion '21.1.2'
@@ -27,17 +26,15 @@ android {
     }
 }
 
+
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
-    compile 'com.rengwuxian.materialedittext:library:2.0.3'
-
-
+    compile 'com.github.traex.rippleeffect:library:1.2.4'
     compile files('libs/gson-2.2.4.jar')
-    compile files('libs/httpclient-4.4.jar')
-    compile files('libs/httpcore-4.4.jar')
-    compile files('libs/httpmime-4.4.jar')
     compile files('libs/systembartint-1.0.4.jar')
-
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
+    compile 'com.android.support:appcompat-v7:21.0.3'
 }

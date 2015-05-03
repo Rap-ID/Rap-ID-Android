@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,14 +23,15 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class networkExecute extends ActionBarActivity {
     SharedPreferences checkPairkey;
-    TextView label;
-    com.gc.materialdesign.views.ButtonRectangle stop;
+
+
     SharedPreferences delPair;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_network_execute);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -46,17 +48,17 @@ public class networkExecute extends ActionBarActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-        setContentView(R.layout.activity_network_execute);
 
         setTitle("服务运行中");
+        final TextView label;
 
         label =(TextView)findViewById(R.id.textView);
-        label.setText("授权服务启动中....");
         checkPairkey =getSharedPreferences("userAuth",MODE_PRIVATE);
         if(checkPairkey.getInt("PAIR_KEY", 0)==-1)
         {
             Intent getPairKey =new Intent(networkExecute.this,createPairKey.class);
             startActivity(getPairKey);
+            finish();
         }
         else
         {
@@ -72,6 +74,7 @@ public class networkExecute extends ActionBarActivity {
             label.setText("Rap-ID授权服务已开始");
 
         }
+        com.gc.materialdesign.views.ButtonRectangle stop;
         stop=(com.gc.materialdesign.views.ButtonRectangle)findViewById(R.id.stop);
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +114,7 @@ public class networkExecute extends ActionBarActivity {
             Intent getPairKey = new Intent (networkExecute.this,LoginActivity.class);
             startActivity(getPairKey);
             finish();
+
         }
 
         return super.onOptionsItemSelected(item);
