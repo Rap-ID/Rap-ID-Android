@@ -62,7 +62,7 @@ public class createPairKey extends ActionBarActivity {
             }
             pair_key=random[0]*1000+random[1]*100+random[2]*10+random[3];
             String pair =Integer.toString(pair_key);
-            Log.d(pair,"pair key");
+            //Log.d(pair,"pair key");
             editor=createPair.edit();
             editor.putInt("PAIR_KEY",pair_key);
             editor.commit();

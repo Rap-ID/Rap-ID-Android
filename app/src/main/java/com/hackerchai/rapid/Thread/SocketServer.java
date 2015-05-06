@@ -109,7 +109,7 @@ public  class  SocketServer {
                             if (decryptMsg.substring(0, 4).equals("AUTH")) {
                                 if (decryptMsg.substring(4, 8).equals(PAIR_KEY)) {
                                     HttpUtil token = new HttpUtil();
-                                    token_url ="http://rapid.cotr.me/api/login";
+                                    token_url ="https://rapid.cotr.me/api/login";
                                     //token.setUrl(token_url);
                                     Map<String, String> params = new HashMap<String, String>();
                                     params.put("username", Username);

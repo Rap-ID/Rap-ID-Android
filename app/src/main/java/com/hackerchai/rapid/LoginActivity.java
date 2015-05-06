@@ -107,7 +107,7 @@ public class LoginActivity extends ActionBarActivity {
                                                  @Override
                                                  public void run() {
                                                      HttpUtil token = new HttpUtil();
-                                                     token_url ="http://rapid.cotr.me/api/login";
+                                                     token_url ="https://rapid.cotr.me/api/login";
                                                      //token.setUrl(token_url);
                                                      Map<String, String> params = new HashMap<String, String>();
                                                      params.put("username", userNameValue);
