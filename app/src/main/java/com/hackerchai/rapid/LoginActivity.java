@@ -44,11 +44,8 @@ public class LoginActivity extends ActionBarActivity {
     private String token_url;
     private String tokenContent;
     private String getToken;
-    String list_url;
-    String idContent;
-    String getId;
-    String update_url;
-    String updateContent;
+
+
 
 
     public static final int SHOW_RESPONSE = 0;
@@ -57,13 +54,8 @@ public class LoginActivity extends ActionBarActivity {
             switch (msg.what) {
                 case SHOW_RESPONSE:
                     String response = (String) msg.obj;
-                    if(!response.equals("BAD_TOKEN")) {
-                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_LONG).show();
-                    }
+
+                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -129,10 +121,9 @@ public class LoginActivity extends ActionBarActivity {
                                                              startActivity(goToNetworkExecute);
                                                              finish();
                                                          } else {
-                                                             getId="BAD_TOKEN";
                                                              Message message =handler.obtainMessage();
                                                              message.what =SHOW_RESPONSE;
-                                                             message.obj=getId.toString();
+                                                             message.obj=getToken.toString();
                                                              handler.sendMessage(message);
                                                          }
                                                      } catch (IOException e) {
@@ -167,7 +158,7 @@ public class LoginActivity extends ActionBarActivity {
         if (err_code.equals("0")) {
             token = "OK";
         } else {
-            token=tokenParse.getError().getId();
+            token=tokenParse.getError().getMsg();
         }
         return token;
 

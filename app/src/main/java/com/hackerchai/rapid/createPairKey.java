@@ -52,6 +52,7 @@ public class createPairKey extends ActionBarActivity {
         setContentView(R.layout.activity_create_pair_key);
 
         setTitle("创建配对密钥");
+        Toast.makeText(createPairKey.this, "登陆成功", Toast.LENGTH_LONG).show();
         createPair = getSharedPreferences("userAuth",MODE_PRIVATE);
         int pair_key;
         if(createPair.getInt("PAIR_KEY", 0)==-1)
