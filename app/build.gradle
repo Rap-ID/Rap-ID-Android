@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+    defaultConfig {
+        applicationId "com.hackerchai.rapid"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName '1.1'
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
+    compile 'com.github.traex.rippleeffect:library:1.2.4'
+    compile files('libs/gson-2.2.4.jar')
+    compile files('libs/systembartint-1.0.4.jar')
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+}
