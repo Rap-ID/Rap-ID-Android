@@ -7,7 +7,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName '1.1'
+        versionName '1.2'
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'

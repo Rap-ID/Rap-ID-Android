@@ -63,17 +63,18 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        if(Build.VERSION.SDK_INT >= 19 ) {
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            // enable status bar tint
             tintManager.setStatusBarTintEnabled(true);
-            // enable navigation bar tint
             tintManager.setStatusBarTintColor(Color.parseColor("#4285f4"));
+            tintManager.setNavigationBarTintEnabled(true);
+            tintManager.setNavigationBarTintColor(Color.parseColor("#4285f4"));
         }
+       /* if(Build.VERSION.SDK_INT>=21)
+        {
+
+        }
+        */
         else
         {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

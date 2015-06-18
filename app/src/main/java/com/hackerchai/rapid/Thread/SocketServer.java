@@ -102,7 +102,7 @@ public  class  SocketServer {
                         if ((msg = in.readLine()) != null) {
                             if(Status==1) {
                                 oKey = rollKey(key);
-                                Log.d("pair","reveive pair message request");
+                               // Log.d("pair","reveive pair message request");
                             }
                             else
                             {
@@ -110,7 +110,7 @@ public  class  SocketServer {
                                 oKey = rollKey(tempHash);
                                 Log.d("auth","reveive auth message request");
                             }
-                            Log.d("received message,and key is",oKey);
+                            //Log.d("received message,and key is",oKey);
                             decryptMsg = Crypto.decrypt(msg,oKey);
                             Log.d("message",decryptMsg);
                             if (decryptMsg.substring(0, 4).equals("PAIR")) {
@@ -249,10 +249,10 @@ public  class  SocketServer {
         }
          private String rollKey (String inputKey) throws UnsupportedEncodingException {
              String original_seed=inputKey;
-             Log.d("original key",inputKey);
+             //Log.d("original key",inputKey);
              int enc_seed_long=(int)Math.floor((System.currentTimeMillis() / 1000) / 60);
              String enc_seed=String.valueOf(enc_seed_long);
-             Log.d("epoch", enc_seed);
+             //Log.d("epoch", enc_seed);
              String original_seed_md5= MD5Util.MD5(original_seed);
              String enc_seed_md5=MD5Util.MD5(MD5Util.MD5(enc_seed));
              String outputKey=MD5Util.MD5(original_seed_md5+enc_seed_md5).substring(0,8);
